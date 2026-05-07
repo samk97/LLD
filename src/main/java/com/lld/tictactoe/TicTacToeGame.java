@@ -43,7 +43,12 @@ public class TicTacToeGame {
             }
 
             System.out.print("Player: " + playerTurn.name + " Enter row,column: ");
-            String s = inputScanner.nextLine();
+            if (!inputScanner.hasNextLine()) {
+                System.out.println("No more input found in input.txt. Game ending.");
+                return "incomplete";
+            }
+            String s = inputScanner.nextLine().trim();
+            if (s.isEmpty()) continue;
             String[] values = s.split(",");
             int inputRow = Integer.parseInt(values[0]);
             int inputCol = Integer.parseInt(values[1]);
