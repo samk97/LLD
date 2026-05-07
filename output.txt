@@ -1,0 +1,24 @@
+Game Started!
+    |    |    |
+    |    |    |
+    |    |    |
+Player: Player1 Enter row,column:     |X   |    |
+    |    |    |
+    |    |    |
+Player: Player2 Enter row,column:     |X   |    |
+O   |    |    |
+    |    |    |
+Player: Player1 Enter row,column: Incorrect position, try again
+    |X   |    |
+O   |    |    |
+    |    |    |
+Player: Player1 Enter row,column:     |X   |    |
+O   |X   |    |
+    |    |    |
+Player: Player2 Enter row,column:     |X   |O   |
+O   |X   |    |
+    |    |    |
+Player: Player1 Enter row,column: Exception in thread "main" java.util.NoSuchElementException: No line found
+	at java.base/java.util.Scanner.nextLine(Scanner.java:1651)
+	at com.lld.tictactoe.TicTacToeGame.startGame(TicTacToeGame.java:46)
+	at com.lld.tictactoe.TicTacToeGame.main(TicTacToeGame.java:112)
