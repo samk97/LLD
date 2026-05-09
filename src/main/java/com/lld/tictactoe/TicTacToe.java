@@ -20,8 +20,8 @@ public class TicTacToe {
 
     private void initializeGame() {
         players = new LinkedList<>();
-        Player player1 = new Player("Player1", new PieceX());
-        Player player2 = new Player("Player2", new PieceO());
+        Player player1 = new Player("PlayerX", new PieceX());
+        Player player2 = new Player("PlayerO", new PieceO());
         players.add(player1);
         players.add(player2);
 
@@ -30,32 +30,33 @@ public class TicTacToe {
 
     public String startGame() {
         boolean winner = false;
-        Scanner sc = new Scanner(System.in);
 
-        while (!winner) {
-            Player playerTurn = players.removeFirst();
+        try (Scanner sc = new Scanner(System.in)) {
+            while (!winner) {
+                Player playerTurn = players.removeFirst();
 
-            board.printBoard();
-            List<Pair<Integer, Integer>> freeSpace = board.getFreeSpaces();
-            if (freeSpace.isEmpty()) {
-                return "It is a draw";
-            }
+                board.printBoard();
+                List<Pair<Integer, Integer>> freeSpace = board.getFreeSpaces();
+                if (freeSpace.isEmpty()) {
+                    return "It is a draw";
+                }
 
-            System.out.println("Player " + playerTurn.name + ": Enter the row and column number (e.g., 0 1):");
-            int row = sc.nextInt();
-            int col = sc.nextInt();
+                System.out.println("Player " + playerTurn.name + ": Enter the row and column number (e.g., 0 1):");
+                int row = sc.nextInt();
+                int col = sc.nextInt();
 
-            boolean pieceAdded = board.addPiece(row, col, playerTurn.piece);
-            if (!pieceAdded) {
-                System.out.println("Incorrect position, try again");
-                players.addFirst(playerTurn);
-                continue;
-            }
-            players.addLast(playerTurn);
+                boolean pieceAdded = board.addPiece(row, col, playerTurn.piece);
+                if (!pieceAdded) {
+                    System.out.println("Incorrect position, try again");
+                    players.addFirst(playerTurn);
+                    continue;
+                }
+                players.addLast(playerTurn);
 
-            boolean isWinner = checkWinner(row, col, playerTurn.piece.type);
-            if (isWinner) {
-                return "Winner is " + playerTurn.name;
+                boolean isWinner = checkWinner(row, col, playerTurn.piece.type);
+                if (isWinner) {
+                    return "Winner is " + playerTurn.name;
+                }
             }
         }
         return "Game Over";
