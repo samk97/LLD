@@ -1,7 +1,9 @@
 package com.lld.tictactoe.models;
 
+import com.lld.tictactoe.enums.PieceType;
+
 public class PlayingPiece {
-    PieceType type;
+    public PieceType type;
 
     public PlayingPiece(PieceType t){
         this.type=t;

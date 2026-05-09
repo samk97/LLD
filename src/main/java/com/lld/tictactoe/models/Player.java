@@ -1,8 +1,8 @@
 package com.lld.tictactoe.models;
 
 public class Player {
-    String name;
-    PlayingPiece piece;
+    public String name;
+    public PlayingPiece piece;
 
     public Player(String name, PlayingPiece piece){
         this.name=name;
