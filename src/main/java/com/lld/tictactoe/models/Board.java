@@ -2,15 +2,31 @@ package com.lld.tictactoe.models;
 
 import java.util.List;
 
-import com.lld.tictactoe.Pair;
+import com.lld.tictactoe.utils.Pair;
 
 public class Board {
     public int size;
     public Cell[][] board;
+    
+    // Tracking counts for O(1) winner check
+    private java.util.Map<String, Integer>[] rowCounts;
+    private java.util.Map<String, Integer>[] colCounts;
+    private java.util.Map<String, Integer> diagCount;
+    private java.util.Map<String, Integer> antiDiagCount;
 
+    @SuppressWarnings("unchecked")
     public Board(int size) {
         this.size = size;
         board = new Cell[size][size];
+        
+        rowCounts = new java.util.HashMap[size];
+        colCounts = new java.util.HashMap[size];
+        for (int i = 0; i < size; i++) {
+            rowCounts[i] = new java.util.HashMap<>();
+            colCounts[i] = new java.util.HashMap<>();
+        }
+        diagCount = new java.util.HashMap<>();
+        antiDiagCount = new java.util.HashMap<>();
 
         initializeBoard();
     }
@@ -41,7 +57,27 @@ public class Board {
             return false;
         }
         board[row][col].piece = piece;
+        
+        // Update counts for O(1) check
+        String symbol = piece.symbol;
+        rowCounts[row].put(symbol, rowCounts[row].getOrDefault(symbol, 0) + 1);
+        colCounts[col].put(symbol, colCounts[col].getOrDefault(symbol, 0) + 1);
+        
+        if (row == col) {
+            diagCount.put(symbol, diagCount.getOrDefault(symbol, 0) + 1);
+        }
+        if (row + col == size - 1) {
+            antiDiagCount.put(symbol, antiDiagCount.getOrDefault(symbol, 0) + 1);
+        }
+        
         return true;
+    }
+
+    public boolean isWinner(int row, int col, String symbol) {
+        return rowCounts[row].getOrDefault(symbol, 0) == size ||
+               colCounts[col].getOrDefault(symbol, 0) == size ||
+               diagCount.getOrDefault(symbol, 0) == size ||
+               antiDiagCount.getOrDefault(symbol, 0) == size;
     }
 
     public void printBoard() {
@@ -50,7 +86,7 @@ public class Board {
                 if (board[i][j].piece == null) {
                     System.out.print("-");
                 } else {
-                    System.out.print(board[i][j].piece.type);
+                    System.out.print(board[i][j].piece.symbol);
                 }
                 System.out.print(" ");
             }

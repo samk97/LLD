@@ -1,4 +1,4 @@
-package com.lld.tictactoe;
+package com.lld.tictactoe.utils;
 
 public class Pair<F, S> {
     public F first;
